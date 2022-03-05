@@ -50,7 +50,7 @@ class EtcdTools:
     def add_vip_host_dns_record(self, env: str, wl_code: str):
 
         dns_record_ttl = 60
-        mps_virtual_ip = 192.168.27.11
+        mps_virtual_ip = "192.168.27.11"
 
         # 因prod環境與其他環境命名方式不是統一 , 由傳入的env參數進行判斷
         if env == "prod":
