@@ -80,7 +80,7 @@ class EtcdTools:
 if __name__ == "__main__":
     hostname = sys.argv[1]
     port = sys.argv[2]
-    username = = sys.argv[3]
+    username = sys.argv[3]
     password = sys.argv[4]
     
 
