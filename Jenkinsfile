@@ -9,19 +9,18 @@ properties([
 pipeline {
     agent any
     environment {
+        // UAT 環境配置
         ETCD_HOST = "etcd"
         ETCD_PORT = 2379
         ETCD_USERNAME = "root"
         ETCD_PASSWORD = credentials("etcd-password")
-        VIRTAUL_IP = "192.168.27.11"
+        VIRTAUL_IP = "192.168.68.12"
     }
     parameters {
-        choice(name: 'env', choices: ['prod'], description: 'environment')
+        choice(name: 'env', choices: ['uat'], description: 'environment')
         string(name: 'wl_code', defaultValue: 'ae888', description: '白牌')
         string(name: 'mps_one_ip', defaultValue: '192.168.0.200', description: 'mps01 對應IP地址')
         string(name: 'mps_two_ip', defaultValue: '192.168.0.201', description: 'mps02 對應IP地址')
-
-        
     }
     stages {
         stage('Upgrade pip and install requirements') {
