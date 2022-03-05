@@ -8,6 +8,7 @@ class EtcdTools:
     def __init__(self, hostname, port, username, password) -> None:
         self.etcd = etcd3.client(host=hostname, port=port, user=username, password=password)
 
+    # ======================================== 新增dns紀錄 ====================================================
 
     def add_host_dns_record(self, env: str, wl_code: str, host: str, ip_address: str):
 
