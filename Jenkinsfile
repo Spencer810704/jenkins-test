@@ -24,11 +24,11 @@ pipeline {
         
     }
     stages {
-        stage("Clone git project"){
-            steps {
-                git 'https://github.com/Spencer810704/jenkins-test.git'   
-            }
-        }
+//         stage("Clone git project"){
+//             steps {
+//                 git 'https://github.com/Spencer810704/jenkins-test.git'   
+//             }
+//         }
         stage('Upgrade pip and install requirements') {
             steps {
                 withPythonEnv('/usr/bin/python3'){
