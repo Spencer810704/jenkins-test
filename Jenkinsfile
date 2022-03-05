@@ -16,7 +16,7 @@ pipeline {
         VIRTAUL_IP = "192.168.48.101"
     }
     parameters {
-        choice(name: 'env', choices: ['prod'], description: 'environment')
+        choice(name: 'env', choices: ['sit'], description: 'environment')
         string(name: 'wl_code', defaultValue: 'ae888', description: '白牌')
         string(name: 'mps_one_ip', defaultValue: '192.168.0.200', description: 'mps01 對應IP地址')
         string(name: 'mps_two_ip', defaultValue: '192.168.0.201', description: 'mps02 對應IP地址')
