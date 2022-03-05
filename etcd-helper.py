@@ -81,6 +81,9 @@ if __name__ == "__main__":
     hostname = sys.argv[1]
     password = sys.argv[2]
     
+    print(f"hostname: {hostname}")
+    print(f"password: {password}")
+
     etcd_tool = EtcdTools(hostname="", password="")
 
     env = "UAT".lower()
