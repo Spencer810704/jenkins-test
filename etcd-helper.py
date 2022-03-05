@@ -84,7 +84,7 @@ if __name__ == "__main__":
     password = sys.argv[4]
     
 
-    etcd_tool = EtcdTools(host=hostname, port=port, username=username, password=password)
+    etcd_tool = EtcdTools(hostname=hostname, port=port, username=username, password=password)
 
     env = "UAT".lower()
     wl_code = "abcd123".lower()
