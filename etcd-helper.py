@@ -5,8 +5,8 @@ import json
 import etcd3
 
 class EtcdTools:
-    def __init__(self, hostname, password) -> None:
-        self.etcd = etcd3.client(host=hostname, port=2379, user="root", password=password)
+    def __init__(self, password) -> None:
+        self.etcd = etcd3.client(host="etcd", port=2379, user="root", password=password)
 
     def load_config_from_django_settings(self):
         pass
@@ -78,13 +78,11 @@ class EtcdTools:
         
 
 if __name__ == "__main__":
-    hostname = sys.argv[1]
-    password = sys.argv[2]
+    password = sys.argv[1]
     
-    print(f"hostname: {hostname}")
     print(f"password: {password}")
 
-    etcd_tool = EtcdTools(hostname="", password="")
+    etcd_tool = EtcdTools(password=password)
 
     env = "UAT".lower()
     wl_code = "abcd123".lower()
