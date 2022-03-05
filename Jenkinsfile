@@ -13,7 +13,7 @@ pipeline {
         ETCD_PORT = 2379
         ETCD_USERNAME = "root"
         ETCD_PASSWORD = credentials("etcd-password")
-        VIRTAUL_IP = "192.168.27.11"
+        VIRTAUL_IP = "192.168.48.101"
     }
     parameters {
         choice(name: 'env', choices: ['prod'], description: 'environment')
