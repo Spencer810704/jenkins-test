@@ -77,19 +77,13 @@ if __name__ == "__main__":
     username = sys.argv[3]
     password = sys.argv[4]
     
-
+    env = sys.argv[5].lower()
+    wl_code = sys.argv[6].lower()    
+    host = sys.argv[7].lower()
+    ip_address = sys.argv[8].lower()
+    
     etcd_tool = EtcdTools(hostname=hostname, port=port, username=username, password=password)
 
-    env = "UAT".lower()
-    wl_code = "abcd123".lower()
-    game_type = "mps".lower()
-
     # 增加解析
-    hostname_one = "mps01.abcd123.uat".lower()
-    ip_one = "127.0.0.1".lower()
-    etcd_tool.add_host_dns_record(env=env, wl_code=wl_code, hostname=hostname_one, ip_address=ip_one)
+    etcd_tool.add_host_dns_record(env=env, wl_code=wl_code, hostname=host, ip_address=ip_address)
 
-    # 增加解析
-    hostname_two = "mps02.abcd123.uat".lower()
-    ip_two = "127.0.0.1".lower()
-    etcd_tool.add_host_dns_record(env=env, wl_code=wl_code, hostname=hostname_two, ip_address=ip_two)
