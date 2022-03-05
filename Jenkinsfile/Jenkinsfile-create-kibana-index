@@ -1,0 +1,42 @@
+properties([
+  buildDiscarder(
+      logRotator(
+          numToKeepStr: '5'
+      )
+  )
+])
+
+pipeline {
+    agent any
+    environment {
+        KIBANA_API_URL = "http://es-coordinating01.pf.stg:5601"
+    }
+    parameters {
+        choice(name: 'env', choices: ['uat'], description: 'environment')
+        string(name: 'wl_code', defaultValue: 'ae888', description: '白牌')
+    }
+    stages {
+        stage('call kibana create index api') {
+            steps {
+                sh "echo $KIBANA_API_URL/api/saved_objects/index-pattern/${wl_code}-ims"
+                sh "echo $KIBANA_API_URL/api/saved_objects/index-pattern/${wl_code}-ecp"
+            }
+        }
+    }
+    post {
+        cleanup {
+            /* clean up our workspace */
+            // deleteDir()
+            
+            /* clean up tmp directory */
+            dir("${workspace}@tmp") {
+                deleteDir()
+            }
+            
+            /* clean up script directory */
+            dir("${workspace}@script") {
+                deleteDir()
+            }
+        }
+    }
+}
