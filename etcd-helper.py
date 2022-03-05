@@ -9,18 +9,7 @@ class EtcdTools:
         self.etcd = etcd3.client(host=hostname, port=port, user=username, password=password)
 
     def add_host_dns_record(self, env: str, wl_code: str, hostname: str, ip_address: str):
-        """增加主機記錄到etcd(內部dns server是coredns+etcd)
 
-        Args:
-            env (str): 操作環境
-            wl_code (str): whitelavel code
-            hostname (str): 主機名稱(同nutanix vm名)
-                舉例:
-                - Prod環境格式為 mps01.ae888
-                - 非Pord環境格式為 mps01.ae888.uat(以uat為例)
-            ip_address (str): 該主機對應IP地址
-        """
-        hostname = hostname.split(".")[0]
         dns_record_ttl = 60
 
         # 因prod環境與其他環境命名方式不是統一 , 由傳入的env參數進行判斷
@@ -38,23 +27,10 @@ class EtcdTools:
 
         # 寫入etcd
         print("寫入etcd")
-        result = self.etcd.put(key=etcd_key, value=etcd_value)
-        print(result)
-        return result
+        self.etcd.put(key=etcd_key, value=etcd_value)
         
     def delete_host_dns_record(self, env: str, wl_code: str, hostname: str):
-        """刪除etcd主機記錄
-
-        Args:
-            env (str): 操作環境
-            wl_code (str): whitelavel code
-            hostname (str): 主機名稱(同nutanix vm名)
-                舉例:
-                - Prod環境格式為 mps01.ae888
-                - 非Pord環境格式為 mps01.ae888.uat(以uat為例)
-            ip_address (str): 該主機對應IP地址
-        """
-
+        
         hostname = hostname.split(".")[0]
 
         # 因prod環境與其他環境命名方式不是統一 , 由傳入的env參數進行判斷
