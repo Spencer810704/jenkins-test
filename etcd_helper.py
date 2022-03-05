@@ -48,11 +48,10 @@ class EtcdTools:
 
     # ======================================== 白牌Virtual IP的dns紀錄 ====================================================
 
-    def add_vip_host_dns_record(self, env: str, wl_code: str):
+    def add_vip_host_dns_record(self, env: str, wl_code: str, mps_virtual_ip: str):
 
         dns_record_ttl = 60
-        mps_virtual_ip = "192.168.27.11"
-
+        
         # 因prod環境與其他環境命名方式不是統一 , 由傳入的env參數進行判斷
         if env == "prod":
             etcd_key = f"/coredns/nexiosoft/{wl_code}/mps"
