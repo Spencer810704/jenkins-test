@@ -11,8 +11,9 @@ if __name__ == "__main__":
     
     env = sys.argv[5].lower()
     wl_code = sys.argv[6].lower()   
+    mps_virtual_ip = sys.argv[7]
     
     etcd_tool = EtcdTools(hostname=etcd_hostname, port=etcd_port, username=etcd_username, password=etcd_password)
 
     # 增加Virtual IP解析
-    etcd_tool.add_vip_host_dns_record(env=env, wl_code=wl_code)
+    etcd_tool.add_vip_host_dns_record(env=env, wl_code=wl_code, mps_virtual_ip=mps_virtual_ip)
