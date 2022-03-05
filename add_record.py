@@ -1,7 +1,5 @@
-#!/usr/bin/python3
-
 import sys
-from etcd_helper import EtcdTools
+from utils.etcd_helper import EtcdTools
 
 if __name__ == "__main__":
     etcd_hostname = sys.argv[1]
