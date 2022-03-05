@@ -8,12 +8,6 @@ class EtcdTools:
     def __init__(self, hostname, port, username, password) -> None:
         self.etcd = etcd3.client(host=hostname, port=port, user=username, password=password)
 
-    def load_config_from_django_settings(self):
-        pass
-
-    def load_config_from_file(self):
-        pass
-
     def add_host_dns_record(self, env: str, wl_code: str, hostname: str, ip_address: str):
         """增加主機記錄到etcd(內部dns server是coredns+etcd)
 
@@ -90,12 +84,12 @@ if __name__ == "__main__":
     wl_code = "abcd123".lower()
     game_type = "mps".lower()
 
-    # # 增加解析
+    # 增加解析
     hostname_one = "mps01.abcd123.uat".lower()
     ip_one = "127.0.0.1".lower()
     etcd_tool.add_host_dns_record(env=env, wl_code=wl_code, hostname=hostname_one, ip_address=ip_one)
 
-    # # 增加解析
+    # 增加解析
     hostname_two = "mps02.abcd123.uat".lower()
     ip_two = "127.0.0.1".lower()
     etcd_tool.add_host_dns_record(env=env, wl_code=wl_code, hostname=hostname_two, ip_address=ip_two)
