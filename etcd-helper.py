@@ -78,7 +78,7 @@ class EtcdTools:
         
 
 if __name__ == "__main__":
-    password = sys.argv[1]
+    password = sys.argv[2]
     
     print(f"password: {password}")
 
