@@ -31,8 +31,7 @@ class EtcdTools:
         self.etcd.put(key=etcd_key, value=etcd_value)
         
     def delete_host_dns_record(self, env: str, wl_code: str, host: str):
-        
-
+       
         # 因prod環境與其他環境命名方式不是統一 , 由傳入的env參數進行判斷
         if env == "prod":
             etcd_key = f"/coredns/nexiosoft/{wl_code}/{host}"
