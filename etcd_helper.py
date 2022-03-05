@@ -45,20 +45,62 @@ class EtcdTools:
         print(f"etcd key: {etcd_key}")
         self.etcd.delete(key=etcd_key)
         
+
+    # ======================================== 白牌Virtual IP的dns紀錄 ====================================================
+
+    def add_vip_host_dns_record(self, env: str, wl_code: str):
+
+        dns_record_ttl = 60
+        mps_virtual_ip = 192.168.27.11
+
+        # 因prod環境與其他環境命名方式不是統一 , 由傳入的env參數進行判斷
+        if env == "prod":
+            etcd_key = f"/coredns/nexiosoft/{wl_code}/mps"
+
+        elif env == "uat" or env == "stg" or env == "sit":
+            etcd_key = f"/coredns/nexiosoft/{env}/{wl_code}/mps"
+
+        # 序列化
+        etcd_value = json.dumps({"host": f"{mps_virtual_ip}", "ttl": dns_record_ttl})
+        print(f"etcd key: {etcd_key}, etcd value: {etcd_value} 寫入etcd")
         
+        # 寫入
+        self.etcd.put(key=etcd_key, value=etcd_value)
 
-if __name__ == "__main__":
-    etcd_hostname = sys.argv[1]
-    etcd_port = sys.argv[2]
-    etcd_username = sys.argv[3]
-    etcd_password = sys.argv[4]
-    
-    env = sys.argv[5].lower()
-    wl_code = sys.argv[6].lower()    
-    host = sys.argv[7].lower()
-    ip_address = sys.argv[8].lower()
-    
-    etcd_tool = EtcdTools(hostname=etcd_hostname, port=etcd_port, username=etcd_username, password=etcd_password)
+    def delete_vip_host_dns_record(self, env:str, wl_code: str):
+        
+        # 因prod環境與其他環境命名方式不是統一 , 由傳入的env參數進行判斷
+        if env == "prod":
+            etcd_key = f"/coredns/nexiosoft/{wl_code}/mps"
 
-    # 增加解析
-    etcd_tool.add_host_dns_record(env=env, wl_code=wl_code, host=host, ip_address=ip_address)
+        elif env == "uat" or env == "stg" or env == "sit":
+            etcd_key = f"/coredns/nexiosoft/{env}/{wl_code}/mps"
+
+        print(f"刪除 VIP domain: {etcd_key}")
+        self.etcd.delete(key=etcd_key)
+
+    # =========================================== 提供總後台調用 ====================================================
+    def add_whitelabel_info_to_etcd(self, env:str, wl_code: str):
+        
+        # key
+        etcd_key = f'/whitelabel/{env}/mps/{wl_code}'
+
+        # 因prod環境與其他環境命名方式不是統一 , 由傳入的env參數進行判斷
+        if env == "prod":
+            etcd_value = f'mps.{wl_code}'
+
+        elif env == "uat" or env == "stg" or env == "sit":
+            etcd_value = f'mps.{wl_code}.{env}'
+
+        print(f"新增白牌資訊: key={etcd_key}, value={etcd_value}")
+        self.etcd.put(key=etcd_key, value=etcd_value)
+
+    def delete_whitelabel_info_from_etcd(self, env:str, wl_code: str):
+
+        # key
+        etcd_key = f'/whitelabel/{env}/mps/{wl_code}'
+         
+        print(f"刪除白牌資訊: {etcd_key}")
+        self.etcd.delete(key=etcd_key)
+        
+        
