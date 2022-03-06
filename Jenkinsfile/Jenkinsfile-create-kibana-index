@@ -19,7 +19,6 @@ pipeline {
         stage('call kibana create index api') {
             steps {
                 sh """
-                    // 後台
                     curl $KIBANA_API_URL/api/saved_objects/index-pattern/uat-${wl_code}-ims \
                         -H 'kbn-xsrf: anything' \
                         -H 'Content-Type: application/json' \
@@ -30,7 +29,6 @@ pipeline {
                                 "notExpandable": "true"
                             }
                         }'
-                    // 前台
                     curl $KIBANA_API_URL/api/saved_objects/index-pattern/uat-${wl_code}-ecp \
                         -H 'kbn-xsrf: anything' \
                         -H 'Content-Type: application/json' \
