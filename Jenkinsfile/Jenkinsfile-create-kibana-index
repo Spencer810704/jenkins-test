@@ -13,13 +13,26 @@ pipeline {
     }
     parameters {
         choice(name: 'env', choices: ['uat'], description: 'environment')
-        string(name: 'wl_code', defaultValue: 'ae888', description: '白牌')
+        string(name: 'wl_code', defaultValue: 'qazxsw', description: '白牌')
     }
     stages {
         stage('call kibana create index api') {
             steps {
-                sh "echo $KIBANA_API_URL/api/saved_objects/index-pattern/${wl_code}-ims"
-                sh "echo $KIBANA_API_URL/api/saved_objects/index-pattern/${wl_code}-ecp"
+                sh """
+                    curl $KIBANA_API_URL/api/saved_objects/index-pattern/uat-${wl_code}-ims \
+                        -H 'kbn-xsrf: anything' \
+                        -H 'Content-Type: application/json' \
+                        -d '{
+                            "attributes": {
+                                "title": "{{index_name}}",
+                                "timeFieldName": "@timestamp",
+                                "notExpandable": "true"
+                            }
+                        }'
+                    
+                """
+                
+                
             }
         }
     }
