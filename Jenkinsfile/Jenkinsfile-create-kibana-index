@@ -1,0 +1,63 @@
+// Jenkinsfile-create-kibana-index
+properties([
+  buildDiscarder(
+      logRotator(
+          numToKeepStr: '5'
+      )
+  )
+])
+
+pipeline {
+    agent any
+    environment {
+        KIBANA_API_URL = "http://es-coordinating01.pf.stg:5601"
+    }
+    parameters {
+        choice(name: 'env', choices: ['sit'], description: 'environment')
+        string(name: 'wl_code', defaultValue: 'qazxsw', description: '白牌')
+    }
+    stages {
+        stage('call kibana create index api') {
+            steps {
+                sh """
+                    curl $KIBANA_API_URL/api/saved_objects/index-pattern/sit-${wl_code}-ims-* \
+                        -H 'kbn-xsrf: anything' \
+                        -H 'Content-Type: application/json' \
+                        -d '{
+                            "attributes": {
+                                "title": "sit-${wl_code}-ims-*",
+                                "timeFieldName": "@timestamp",
+                                "notExpandable": "true"
+                            }
+                        }'
+                    curl $KIBANA_API_URL/api/saved_objects/index-pattern/sit-${wl_code}-ecp-* \
+                        -H 'kbn-xsrf: anything' \
+                        -H 'Content-Type: application/json' \
+                        -d '{
+                            "attributes": {
+                                "title": "sit-${wl_code}-ecp-*",
+                                "timeFieldName": "@timestamp",
+                                "notExpandable": "true"
+                            }
+                        }'
+                """
+            }
+        }
+    }
+    post {
+        cleanup {
+            /* clean up our workspace */
+            // deleteDir()
+            
+            /* clean up tmp directory */
+            dir("${workspace}@tmp") {
+                deleteDir()
+            }
+            
+            /* clean up script directory */
+            dir("${workspace}@script") {
+                deleteDir()
+            }
+        }
+    }
+}
