@@ -19,22 +19,22 @@ pipeline {
         stage('call kibana create index api') {
             steps {
                 sh """
-                    curl $KIBANA_API_URL/api/saved_objects/index-pattern/uat-${wl_code}-ims \
+                    curl $KIBANA_API_URL/api/saved_objects/index-pattern/uat-${wl_code}-ims-* \
                         -H 'kbn-xsrf: anything' \
                         -H 'Content-Type: application/json' \
                         -d '{
                             "attributes": {
-                                "title": "uat-${wl_code}-ims",
+                                "title": "uat-${wl_code}-ims-*",
                                 "timeFieldName": "@timestamp",
                                 "notExpandable": "true"
                             }
                         }'
-                    curl $KIBANA_API_URL/api/saved_objects/index-pattern/uat-${wl_code}-ecp \
+                    curl $KIBANA_API_URL/api/saved_objects/index-pattern/uat-${wl_code}-ecp-* \
                         -H 'kbn-xsrf: anything' \
                         -H 'Content-Type: application/json' \
                         -d '{
                             "attributes": {
-                                "title": "uat-${wl_code}-exp",
+                                "title": "uat-${wl_code}-ecp-*",
                                 "timeFieldName": "@timestamp",
                                 "notExpandable": "true"
                             }
