@@ -1,4 +1,3 @@
-// Jenkinsfile-create-kibana-index
 properties([
   buildDiscarder(
       logRotator(
