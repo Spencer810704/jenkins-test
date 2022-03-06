@@ -24,7 +24,7 @@ pipeline {
                         -H 'Content-Type: application/json' \
                         -d '{
                             "attributes": {
-                                "title": "{{index_name}}",
+                                "title": "uat-${wl_code}-ims",
                                 "timeFieldName": "@timestamp",
                                 "notExpandable": "true"
                             }
